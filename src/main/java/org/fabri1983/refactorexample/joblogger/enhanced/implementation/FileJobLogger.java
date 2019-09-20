@@ -1,7 +1,6 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.FileHandler;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
@@ -21,7 +20,7 @@ public class FileJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobL
 			}
 			FileHandler fh= new FileHandler(file.getAbsolutePath(), true);
 			logger.addHandler(fh);			
-		} catch (SecurityException | IOException ex) {
+		} catch (Exception ex) {
 			throw new JobLoggerException("Couldn't create FileHandler", ex);
 		}
 	}
