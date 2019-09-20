@@ -64,7 +64,7 @@ public class JobLoggerWithMocksTest {
 		PowerMock.verifyAll();
 		
 		Assert.assertTrue(tempFile.exists());
-		String loggedMessage = XmlDomUtil.getFirstMessageFromXmlFile(tempFile);
+		String loggedMessage = XmlDomUtil.getMessagesFromXmlFile(tempFile).get(0);
 		Assert.assertEquals(messageToLog, loggedMessage);
 	}
 

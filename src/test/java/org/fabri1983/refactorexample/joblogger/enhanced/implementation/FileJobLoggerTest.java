@@ -1,6 +1,8 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
@@ -56,14 +58,17 @@ public class FileJobLoggerTest {
 		// given: a File Job Logger
 		IEnhancedJobLogger logger = JobLoggerFactory.newFileJobLogger(tempFile);
 		
-		// when: logging a message
-		String messageToLog = "message to be logged";
-		logger.info(messageToLog);
+		// when: logging messages
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.info(warningMessage);
+		String errorMessage = "error message";
+		logger.info(errorMessage);
 		
-		// then: logged message exists in file
-		Assert.assertTrue(tempFile.exists());
-		String loggedMessage = XmlDomUtil.getFirstMessageFromXmlFile(tempFile);
-		Assert.assertEquals(messageToLog, loggedMessage);
+		// then: logged messages exists in file
+		List<String> loggedMessages = XmlDomUtil.getMessagesFromXmlFile(tempFile);
+		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), loggedMessages);
 	}
 	
 }

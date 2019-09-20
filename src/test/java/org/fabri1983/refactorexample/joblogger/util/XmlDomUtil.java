@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,7 +19,7 @@ import org.xml.sax.SAXException;
 
 public class XmlDomUtil {
 
-	public static String getFirstMessageFromXmlFile(File file) throws ParserConfigurationException, SAXException, IOException {
+	public static List<String> getMessagesFromXmlFile(File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		
@@ -37,8 +39,13 @@ public class XmlDomUtil {
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(new InputSource(new StringReader(fileContent)));
 		
+		// collect all messages
 		NodeList nList = document.getElementsByTagName("message");
-		return nList.item(0).getTextContent();
+		List<String> messages = new ArrayList<>(nList.getLength());
+		for (int i=0, c=nList.getLength(); i < c; ++i) {
+			messages.add(nList.item(i).getTextContent());
+		}
+		return messages;
 	}
 	
 }

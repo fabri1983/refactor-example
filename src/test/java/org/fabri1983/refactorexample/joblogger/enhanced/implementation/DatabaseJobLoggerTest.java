@@ -36,7 +36,7 @@ public class DatabaseJobLoggerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		mockComponents();
+		mockComponentsForThreeCalls();
 	}
 	
 	@Test
@@ -49,8 +49,12 @@ public class DatabaseJobLoggerTest {
 		IEnhancedJobLogger logger = JobLoggerFactory.newDatabaseJobLogger(connection);
 		
 		// when: login a message
-		String messageToLog = "message to be logged";
-		logger.info(messageToLog);
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.info(warningMessage);
+		String errorMessage = "error message";
+		logger.info(errorMessage);
 		
 		// then: verify components has been called as per expectations
 		PowerMock.verifyAll();
@@ -61,7 +65,7 @@ public class DatabaseJobLoggerTest {
 		return connection;
 	}
 
-	private void mockComponents() throws SQLException {
+	private void mockComponentsForThreeCalls() throws SQLException {
 		Connection mockConnection = createMock(Connection.class);
 		PreparedStatement mockStatement = createMock(PreparedStatement.class);
 		
@@ -70,16 +74,21 @@ public class DatabaseJobLoggerTest {
 				.andReturn(mockConnection);
 		
 		expect(mockConnection.prepareStatement(anyString()))
-				.andReturn(mockStatement);
+				.andReturn(mockStatement)
+				.times(3);
 		
 		expect(mockStatement.execute())
-				.andReturn(true);
-		mockStatement.setString(anyInt(), anyString());
-		expectLastCall();
-		mockStatement.setInt(anyInt(), anyInt());
-		expectLastCall();
-		mockStatement.close();
-		expectLastCall();
+				.andReturn(true)
+				.times(3);
+		
+		for (int i=0; i < 3; ++i) {
+			mockStatement.setString(anyInt(), anyString());
+			expectLastCall();
+			mockStatement.setInt(anyInt(), anyInt());
+			expectLastCall();
+			mockStatement.close();
+			expectLastCall();
+		}
 		
 		PowerMock.replayAll(mockConnection, mockStatement);
 	}

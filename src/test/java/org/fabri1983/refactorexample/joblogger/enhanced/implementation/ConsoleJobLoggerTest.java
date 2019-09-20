@@ -22,20 +22,26 @@ public class ConsoleJobLoggerTest {
 		// given: a Console Job Logger
 		IEnhancedJobLogger logger = JobLoggerFactory.newConsoleJobLogger();
 		
-		// when: logging a message to console
-		String messageToLog = "message to be logged";
-		logger.info(messageToLog);
+		// when: logging messages to console
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.warn(warningMessage);
+		String errorMessage = "error message";
+		logger.error(errorMessage);
 		
 		// then: retrieve logged message from cusotm console
-		String loggedMessage = StandardConsoleRedirector.getCurrentConsoleContent();
+		String loggedMessages = StandardConsoleRedirector.getCurrentConsoleContent();
 		
 		// then: restore system console
 		StandardConsoleRedirector.restoreStd();
 		StandardConsoleRedirector.closeCustomConsole();
 		
-		// then: message from custom console matches with expected message
-		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected message.", contains);
+		// then: messages from custom console matches with expected messages
+		boolean containsAll = loggedMessages.contains(infoMessage) 
+				&& loggedMessages.contains(warningMessage)
+				&& loggedMessages.contains(errorMessage);
+		Assert.assertTrue("Console logged messages are not the same than expected messages.", containsAll);
 	}
 	
 }
