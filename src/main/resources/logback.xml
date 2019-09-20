@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration debug="false" scan="false">
+
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+	
+	<!-- level: TRACE < DEBUG < INFO < WARN < ERROR -->
+	<root level="INFO">
+	</root>
+
+</configuration>
