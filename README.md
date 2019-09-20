@@ -23,7 +23,7 @@ and good practices for clean code.
 - Good practices were took into consideration, and some fixes:
   - Modularization.
   - Meaningful variable and method names. Also keeping code conventions for class/variable/method names.
-  - Avoid static variables, since they are cumbersome when doing junit tests and may produce irreproducible bugs on concurrent scenarios.
+  - Avoid static variables, since they are cumbersome when implementing unit tests and may produce irreproducible bugs on concurrent scenarios.
   - Use interfaces to define contracts and then implementing different behaviours.
   - Using enums to narrow variable values.
   - Encapsulate long list of parameters into a context or configuration object.
@@ -34,7 +34,10 @@ and good practices for clean code.
   - Close statements after use to release resources.
 - JUnit tests runs both versions of the program.
   - Using Maven Surefire plugin with default group `AllLoggersCategoryTest` runs all tests. See next section.
-
+  - Using Given-When-Then idiom.
+  - Using parameterized test.
+  - Using mocking frameworks.
+ 
 
 ## Running Tests
 
