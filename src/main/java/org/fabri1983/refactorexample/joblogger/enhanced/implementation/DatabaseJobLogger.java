@@ -2,6 +2,7 @@ package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 
@@ -21,7 +22,7 @@ public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhanced
 			prepStatement.setString(1, message);
 			prepStatement.setInt(2, 1);
 			prepStatement.execute();
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.severe(ex.getMessage());
 		}
 	}
@@ -32,7 +33,7 @@ public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhanced
 			prepStatement.setString(1, message);
 			prepStatement.setInt(2, 3);
 			prepStatement.execute();
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.severe(ex.getMessage());
 		}
 	}
@@ -43,7 +44,7 @@ public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhanced
 			prepStatement.setString(1, message);
 			prepStatement.setInt(2, 2);
 			prepStatement.execute();
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.severe(ex.getMessage());
 		}
 	}
