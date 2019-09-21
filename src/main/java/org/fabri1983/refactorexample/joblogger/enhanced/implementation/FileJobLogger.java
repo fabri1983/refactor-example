@@ -16,10 +16,7 @@ public class FileJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobL
 
 	private void setHandler(File file) {
 		try {
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			FileHandler fh= new FileHandler(file.getAbsolutePath(), true);
+			FileHandler fh = new FileHandler(file.getAbsolutePath(), true);
 			logger.addHandler(fh);			
 		} catch (Exception ex) {
 			throw new JobLoggerException(JobLoggerExceptionMessage.FILE_HANDLER_NOT_BUILT, ex);

@@ -1,4 +1,4 @@
-# Refactoring a Java Program: JobLogger
+# Refactoring a Java program: JobLogger
 
 [![Build Status](https://travis-ci.org/fabri1983/refactor-example.svg?branch=master)](https://travis-ci.org/fabri1983/refactor-example?branch=master)
 &nbsp;&nbsp;&nbsp;&nbsp;
