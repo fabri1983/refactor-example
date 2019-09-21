@@ -12,14 +12,24 @@ and good practices for clean code.
 
 
 - Supports Java 8 only by the moment. I'm having issues with the use of EasyMock and its CGLIB internal api when running on Java 9 and higher.
+
 - Uses Maven 3.6.x for project setup and building. You can use `mvnw` if you don't have Maven installed in your host.
+
 - Class `org.fabri1983.refactorexample.joblogger.JobLogger` is the target class to be refactored.
+  - You can notice that the first line of method `JobLogger.logMessage()` will throw a NullPointerException if message object is null, 
+  which is a common problem compilers do not see and should show you a warning. (I think you can configure your IDE settings for such scenarios).
+  - The `JobLogger.logMessage()` method tries to connect to a database and also creates some I/O handlers no matter what's the output target.
+  - It also has a very complex logic with conditional statements everywhere.
+  - It defines a list of boolean parameters acting as flags letting you control the internal behavior of the method, which turns it into a white box.
+  - Coherence is very low since it tries to do many unrelated things: creation of I/O handlers and database must be threated at configuration/creation level.
+
 - Classes on package `org.fabri1983.refactorexample.joblogger.enhanced` are the result of applying a refactor. Resulting core classes:
   - `ConsoleJobLogger`: logs to StdErr.
   - `FileJobLogger`: logs to a file.
   - `DatabaseJobLogger`: logs to a database.
   - `CompoundJobLogger`: allows creation of one logger compound by 2 or more loggers.
   - Many other classes and interfaces.
+
 - Good practices were took into consideration, and some fixes:
   - Modularization.
   - Meaningful variable and method names. Also keeping code conventions for class/variable/method names.
@@ -32,6 +42,7 @@ and good practices for clean code.
   - Static factory method and builder design patterns.
   - Dependency Injection (for example a Connection object).
   - Close statements after use to release resources.
+
 - JUnit tests runs both versions of the program.
   - Using Maven Surefire plugin with default group `AllLoggersCategoryTest` runs all tests. See next section.
   - Using Given-When-Then idiom.

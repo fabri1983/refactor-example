@@ -54,6 +54,21 @@ public class JobLoggerTest {
 	}
 	
 	@Test
+	public void whenCreatingLogAndSendNullMessage_thenException() {
+		
+		Assert.assertThrows(NullPointerException.class, () -> {
+			JobLogger.LogMessage(null, false, false, false);
+		});
+	}
+	
+	@Test
+	public void whenCreatingLogAndSendEmptyMessage_thenNothingHappens() throws Exception {
+		
+		String emptyMsg = "";
+		JobLogger.LogMessage(emptyMsg, false, false, false);
+	}
+	
+	@Test
 	public void whenCreatingLogWithDatabaseOuputAndNullProperties_thenException() {
 		
 		// set one of the output arguments and one of the level arguments to avoid other exception message
