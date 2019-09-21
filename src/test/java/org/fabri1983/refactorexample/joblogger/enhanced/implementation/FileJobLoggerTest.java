@@ -62,9 +62,9 @@ public class FileJobLoggerTest {
 		String infoMessage = "info message";
 		logger.info(infoMessage);
 		String warningMessage = "warning message";
-		logger.info(warningMessage);
+		logger.warn(warningMessage);
 		String errorMessage = "error message";
-		logger.info(errorMessage);
+		logger.error(errorMessage);
 		
 		// then: logged messages exists in file
 		List<String> loggedMessages = XmlDomUtil.getMessagesFromXmlFile(tempFile);

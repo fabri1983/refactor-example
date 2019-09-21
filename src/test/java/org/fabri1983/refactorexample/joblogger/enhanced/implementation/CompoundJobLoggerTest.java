@@ -2,6 +2,8 @@ package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
@@ -59,26 +61,32 @@ public class CompoundJobLoggerTest {
 		IEnhancedJobLogger consoleLogger = JobLoggerFactory.newConsoleJobLogger();
 		
 		// given: a logger compounded by two loggers 
-		IEnhancedJobLogger compoundLogger = JobLoggerFactory.newCompoundJobLogger(fileLogger, consoleLogger);
+		IEnhancedJobLogger logger = JobLoggerFactory.newCompoundJobLogger(fileLogger, consoleLogger);
 		
-		// when: logging a message on the compound logger
-		String infoMessage = "this is an info message";
-		compoundLogger.info(infoMessage);
+		// when: logging messages on the compound logger
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.warn(warningMessage);
+		String errorMessage = "error message";
+		logger.error(errorMessage);
 		
 		// then: retrieve logged message from custom console
-		String consoleLoggedMessage = StandardConsoleRedirector.getCurrentConsoleContent();
+		String consoleLoggedMessages = StandardConsoleRedirector.getCurrentConsoleContent();
 		
 		// then: restore system console
 		StandardConsoleRedirector.restoreStd();
 		StandardConsoleRedirector.closeCustomConsole();
 		
-		// then: get logged message from file
-		String fileLoggedMessage = XmlDomUtil.getMessagesFromXmlFile(tempFile).get(0);
+		// then: messages from custom console matches with expected messages
+		boolean containsAll = consoleLoggedMessages.contains(infoMessage) 
+				&& consoleLoggedMessages.contains(warningMessage)
+				&& consoleLoggedMessages.contains(errorMessage);
+		Assert.assertTrue("Console logged messages are not the same than expected messages.", containsAll);
 		
-		// then: console message contains expected message
-		Assert.assertTrue(consoleLoggedMessage.contains(infoMessage));
-		// then: file message matches expected message
-		Assert.assertEquals(infoMessage, fileLoggedMessage);
+		// then: logged messages exists in file
+		List<String> fileLoggedMessages = XmlDomUtil.getMessagesFromXmlFile(tempFile);
+		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), fileLoggedMessages);
 	}
 	
 }

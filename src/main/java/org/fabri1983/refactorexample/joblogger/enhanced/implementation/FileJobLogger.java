@@ -5,6 +5,7 @@ import java.util.logging.FileHandler;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerExceptionMessage;
 
 public class FileJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobLogger {
 
@@ -21,7 +22,7 @@ public class FileJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobL
 			FileHandler fh= new FileHandler(file.getAbsolutePath(), true);
 			logger.addHandler(fh);			
 		} catch (Exception ex) {
-			throw new JobLoggerException("Couldn't create FileHandler", ex);
+			throw new JobLoggerException(JobLoggerExceptionMessage.FILE_HANDLER_NOT_BUILT, ex);
 		}
 	}
 
