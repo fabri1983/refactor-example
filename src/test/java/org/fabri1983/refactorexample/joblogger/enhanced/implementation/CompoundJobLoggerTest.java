@@ -8,6 +8,7 @@ import java.util.List;
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
 import org.fabri1983.refactorexample.joblogger.util.StandardConsoleRedirector;
 import org.fabri1983.refactorexample.joblogger.util.XmlDomUtil;
@@ -22,6 +23,24 @@ public class CompoundJobLoggerTest {
 
 	@Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+	
+	@Test(expected = JobLoggerException.class)
+	public void whenCreatingCompoundJobLoggerWithNullArray_thenException() {
+		
+		// given: a Compound Job Logger with no null array
+		JobLoggerFactory.newCompoundJobLogger((IEnhancedJobLogger[])null);
+		
+		// then: exception is thrown
+	}
+	
+	@Test(expected = JobLoggerException.class)
+	public void whenCreatingCompoundJobLoggerWithEmptyArray_thenException() {
+		
+		// given: a Compound Job Logger with empty array
+		JobLoggerFactory.newCompoundJobLogger(new IEnhancedJobLogger[]{});
+		
+		// then: exception is thrown
+	}
 	
 	@Test
 	public void whenCreatingCompoundJobLogger_thenLoggersAreCreated() throws IOException {

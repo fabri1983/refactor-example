@@ -4,6 +4,8 @@ import java.io.File;
 import java.sql.Connection;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerExceptionMessage;
 import org.fabri1983.refactorexample.joblogger.enhanced.implementation.CompoundJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.implementation.ConsoleJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.implementation.DatabaseJobLogger;
@@ -24,6 +26,9 @@ public class JobLoggerFactory {
 	}
 	
 	public static IEnhancedJobLogger newCompoundJobLogger(IEnhancedJobLogger ... loggers) {
+		if (loggers == null || loggers.length == 0) {
+			throw new JobLoggerException(JobLoggerExceptionMessage.JOB_LOGGERS_MISSING);
+		}
 		return new CompoundJobLogger(loggers);
 	}
 }

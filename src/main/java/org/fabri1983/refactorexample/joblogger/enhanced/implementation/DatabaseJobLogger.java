@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerExceptionMessage;
 
 public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobLogger {
 
@@ -13,7 +15,21 @@ public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhanced
 	
 	public DatabaseJobLogger(Connection connection) {
 		super(DatabaseJobLogger.class.getSimpleName());
+		validateConnection(connection);
 		this.connection = connection;
+	}
+
+	protected void validateConnection(Connection connection) {
+		if (connection == null) {
+			throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_MISSING);
+		}
+		try {
+			if (connection.isClosed()) {
+				throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_CLOSED);
+			}
+		} catch (SQLException ex) {
+			throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_SQL_EXCEPTION, ex);
+		}
 	}
 
 	@Override

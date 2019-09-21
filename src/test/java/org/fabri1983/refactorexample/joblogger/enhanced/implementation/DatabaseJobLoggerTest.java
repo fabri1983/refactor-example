@@ -17,6 +17,7 @@ import static org.powermock.api.easymock.PowerMock.mockStatic;
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
+import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -33,8 +34,56 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @Category({ EnhancedLoggerCategoryTest.class, AllLoggersCategoryTest.class })
 public class DatabaseJobLoggerTest {
 	
+	@Test(expected = JobLoggerException.class)
+	public void whenCreatingLogWithDatabaseOuputWithNullConnection_thenException() throws Exception {
+		
+		// given: a null connection
+		Connection connection = null;
+		
+		// given: a Database Job Logger
+		JobLoggerFactory.newDatabaseJobLogger(connection);
+		
+		// then: exception is raised
+	}
+	
+	@Test(expected = JobLoggerException.class)
+	public void whenCreatingLogWithDatabaseOuputWithClosedConnection_thenException() throws Exception {
+		
+		// prepare mocks and expectations
+		mockComponentsForClosedConnection();
+		
+		// given: a null connection
+		Connection connection = createConnection();
+		
+		// given: a Database Job Logger
+		JobLoggerFactory.newDatabaseJobLogger(connection);
+		
+		// then: verify components has been called as per expectations
+		PowerMock.verifyAll();
+		
+		// then: exception is raised
+	}
+	
+	@Test(expected = JobLoggerException.class)
+	public void whenCreatingLogWithDatabaseOuputWithErrorConnection_thenException() throws Exception {
+		
+		// prepare mocks and expectations
+		mockComponentsForErrorConnection();
+		
+		// given: a null connection
+		Connection connection = createConnection();
+		
+		// given: a Database Job Logger
+		JobLoggerFactory.newDatabaseJobLogger(connection);
+		
+		// then: verify components has been called as per expectations
+		PowerMock.verifyAll();
+		
+		// then: exception is raised
+	}
+	
 	@Test
-	public void whenCreatingLogWithDatabaseOuputAndDummyConnection_thenExceptionIsCaughtInternally() throws Exception {
+	public void whenCreatingLogWithDatabaseOuputWithDummyStatement_thenExceptionIsCaughtInternally() throws Exception {
 		
 		// prepare mocks and expectations
 		mockComponentsForThreeExceptionsOnStatementCall();
@@ -57,21 +106,6 @@ public class DatabaseJobLoggerTest {
 		PowerMock.verifyAll();
 	}
 	
-	private void mockComponentsForThreeExceptionsOnStatementCall() throws SQLException {
-		Connection mockConnection = createMock(Connection.class);
-		PreparedStatement mockStatement = createMock(PreparedStatement.class);
-		
-		mockStatic(DriverManager.class);
-		expect(DriverManager.getConnection(anyString(), anyObject()))
-				.andReturn(mockConnection);
-		
-		expect(mockConnection.prepareStatement(anyString()))
-				.andThrow(new SQLException("Dummy Exception"))
-				.times(3);
-		
-		PowerMock.replayAll(mockConnection, mockStatement);
-	}
-
 	@Test
 	public void whenCreatingLogWithDatabaseOuput_thenDatabaseExecutedStatement() throws Exception {
 		
@@ -101,6 +135,50 @@ public class DatabaseJobLoggerTest {
 		return connection;
 	}
 
+	private void mockComponentsForClosedConnection() throws SQLException {
+		Connection mockConnection = createMock(Connection.class);
+		
+		mockStatic(DriverManager.class);
+		expect(DriverManager.getConnection(anyString(), anyObject()))
+				.andReturn(mockConnection);
+		
+		expect(mockConnection.isClosed())
+				.andReturn(true);
+		
+		PowerMock.replayAll(mockConnection);
+	}
+	
+	private void mockComponentsForErrorConnection() throws SQLException {
+		Connection mockConnection = createMock(Connection.class);
+		
+		mockStatic(DriverManager.class);
+		expect(DriverManager.getConnection(anyString(), anyObject()))
+				.andReturn(mockConnection);
+		
+		expect(mockConnection.isClosed())
+				.andThrow(new SQLException("Dummy Connection Exception"));
+		
+		PowerMock.replayAll(mockConnection);
+	}
+	
+	private void mockComponentsForThreeExceptionsOnStatementCall() throws SQLException {
+		Connection mockConnection = createMock(Connection.class);
+		PreparedStatement mockStatement = createMock(PreparedStatement.class);
+		
+		mockStatic(DriverManager.class);
+		expect(DriverManager.getConnection(anyString(), anyObject()))
+				.andReturn(mockConnection);
+		
+		expect(mockConnection.isClosed())
+				.andReturn(false);
+		
+		expect(mockConnection.prepareStatement(anyString()))
+				.andThrow(new SQLException("Dummy Statement Exception"))
+				.times(3);
+		
+		PowerMock.replayAll(mockConnection, mockStatement);
+	}
+
 	private void mockComponentsForThreeCalls() throws SQLException {
 		Connection mockConnection = createMock(Connection.class);
 		PreparedStatement mockStatement = createMock(PreparedStatement.class);
@@ -108,6 +186,9 @@ public class DatabaseJobLoggerTest {
 		mockStatic(DriverManager.class);
 		expect(DriverManager.getConnection(anyString(), anyObject()))
 				.andReturn(mockConnection);
+		
+		expect(mockConnection.isClosed())
+				.andReturn(false);
 		
 		expect(mockConnection.prepareStatement(anyString()))
 				.andReturn(mockStatement)
