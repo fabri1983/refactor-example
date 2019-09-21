@@ -21,9 +21,9 @@ and good practices for clean code.
   - The `JobLogger.logMessage()` method tries to connect to a database and also creates some I/O handlers no matter what's the output target.
   - It also has a very complex logic with conditional statements everywhere.
   - It defines a list of boolean parameters acting as flags letting you control the internal behavior of the method, which turns it into a white box.
-  - Coherence is very low since it tries to do many unrelated things: creation of I/O handlers and database must be threated at configuration/creation level.
+  - Cohesiveness is very low since it tries to do many unrelated things: creation of I/O handlers and database must be threated at configuration/creation level.
 
-- Classes on package `org.fabri1983.refactorexample.joblogger.enhanced` are the result of applying a refactor. Resulting core classes:
+- Classes on package `org.fabri1983.refactorexample.joblogger.enhanced` are the result after applying a refactor. Resulting core classes:
   - `ConsoleJobLogger`: logs to StdErr.
   - `FileJobLogger`: logs to a file.
   - `DatabaseJobLogger`: logs to a database.
