@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 public class XmlDomUtil {
 
-	public static List<String> getMessagesFromXmlFile(File file) throws ParserConfigurationException, SAXException, IOException {
+	public static List<String> getMessagesFromLogXmlFile(File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		

@@ -30,7 +30,7 @@ public class ConsoleJobLoggerTest {
 		String errorMessage = "error message";
 		logger.error(errorMessage);
 		
-		// then: retrieve logged message from custom console
+		// then: retrieve logged messages from custom console
 		String loggedMessages = StandardConsoleRedirector.getCurrentConsoleContent();
 		
 		// then: restore system console

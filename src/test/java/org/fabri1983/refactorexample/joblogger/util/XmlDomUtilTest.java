@@ -46,7 +46,7 @@ public class XmlDomUtilTest {
 		}
 		
 		// when: parsing xml to extract message
-		String message = XmlDomUtil.getMessagesFromXmlFile(tempFile).get(0);
+		String message = XmlDomUtil.getMessagesFromLogXmlFile(tempFile).get(0);
 		
 		// then: message is the expected
 		Assert.assertEquals(expectedMessage, message);
@@ -75,7 +75,7 @@ public class XmlDomUtilTest {
 		}
 		
 		// when: parsing xml to extract message
-		String message = XmlDomUtil.getMessagesFromXmlFile(tempFile).get(0);
+		String message = XmlDomUtil.getMessagesFromLogXmlFile(tempFile).get(0);
 		
 		// then: message is the expected
 		Assert.assertEquals(expectedMessage, message);

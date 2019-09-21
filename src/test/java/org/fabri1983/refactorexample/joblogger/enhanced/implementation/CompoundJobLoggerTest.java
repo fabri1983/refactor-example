@@ -71,7 +71,7 @@ public class CompoundJobLoggerTest {
 		String errorMessage = "error message";
 		logger.error(errorMessage);
 		
-		// then: retrieve logged message from custom console
+		// then: retrieve logged messages from custom console
 		String consoleLoggedMessages = StandardConsoleRedirector.getCurrentConsoleContent();
 		
 		// then: restore system console
@@ -85,7 +85,7 @@ public class CompoundJobLoggerTest {
 		Assert.assertTrue("Console logged messages are not the same than expected messages.", containsAll);
 		
 		// then: logged messages exists in file
-		List<String> fileLoggedMessages = XmlDomUtil.getMessagesFromXmlFile(tempFile);
+		List<String> fileLoggedMessages = XmlDomUtil.getMessagesFromLogXmlFile(tempFile);
 		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), fileLoggedMessages);
 	}
 	

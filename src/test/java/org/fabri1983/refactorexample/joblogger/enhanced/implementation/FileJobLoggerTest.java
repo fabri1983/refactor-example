@@ -67,7 +67,7 @@ public class FileJobLoggerTest {
 		logger.error(errorMessage);
 		
 		// then: logged messages exists in file
-		List<String> loggedMessages = XmlDomUtil.getMessagesFromXmlFile(tempFile);
+		List<String> loggedMessages = XmlDomUtil.getMessagesFromLogXmlFile(tempFile);
 		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), loggedMessages);
 	}
 	
