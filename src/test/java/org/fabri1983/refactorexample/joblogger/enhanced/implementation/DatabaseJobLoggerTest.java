@@ -18,7 +18,6 @@ import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -34,13 +33,50 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @Category({ EnhancedLoggerCategoryTest.class, AllLoggersCategoryTest.class })
 public class DatabaseJobLoggerTest {
 	
-	@Before
-	public void setUp() throws Exception {
-		mockComponentsForThreeCalls();
+	@Test
+	public void whenCreatingLogWithDatabaseOuputAndDummyConnection_thenExceptionIsCaughtInternally() throws Exception {
+		
+		// prepare mocks and expectations
+		mockComponentsForThreeExceptionsOnStatementCall();
+		
+		// given: a mocked connection
+		Connection connection = createConnection();
+		
+		// given: a Database Job Logger
+		IEnhancedJobLogger logger = JobLoggerFactory.newDatabaseJobLogger(connection);
+		
+		// when: login messages
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.warn(warningMessage);
+		String errorMessage = "error message";
+		logger.error(errorMessage);
+		
+		// then: verify components has been called as per expectations
+		PowerMock.verifyAll();
 	}
 	
+	private void mockComponentsForThreeExceptionsOnStatementCall() throws SQLException {
+		Connection mockConnection = createMock(Connection.class);
+		PreparedStatement mockStatement = createMock(PreparedStatement.class);
+		
+		mockStatic(DriverManager.class);
+		expect(DriverManager.getConnection(anyString(), anyObject()))
+				.andReturn(mockConnection);
+		
+		expect(mockConnection.prepareStatement(anyString()))
+				.andThrow(new SQLException("Dummy Exception"))
+				.times(3);
+		
+		PowerMock.replayAll(mockConnection, mockStatement);
+	}
+
 	@Test
 	public void whenCreatingLogWithDatabaseOuput_thenDatabaseExecutedStatement() throws Exception {
+		
+		// prepare mocks and expectations
+		mockComponentsForThreeCalls();
 		
 		// given: a mocked connection
 		Connection connection = createConnection();
@@ -61,7 +97,7 @@ public class DatabaseJobLoggerTest {
 	}
 
 	private Connection createConnection() throws SQLException {
-		Connection connection = DriverManager.getConnection("url", new Properties());
+		Connection connection = DriverManager.getConnection("anyUrl", new Properties());
 		return connection;
 	}
 
