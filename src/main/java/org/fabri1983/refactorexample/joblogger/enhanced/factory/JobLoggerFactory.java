@@ -18,6 +18,9 @@ public class JobLoggerFactory {
 	}
 	
 	public static IEnhancedJobLogger newFileJobLogger(File file) {
+		if (file == null) {
+			throw new JobLoggerException(JobLoggerExceptionMessage.FILE_IS_NULL);
+		}
 		return new FileJobLogger(file);
 	}
 	

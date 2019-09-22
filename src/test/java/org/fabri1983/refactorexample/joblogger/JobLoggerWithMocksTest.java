@@ -134,7 +134,7 @@ public class JobLoggerWithMocksTest {
 		String password = "pass";
 		
 		// set db parameters so we avoid any exception before writing to a file
-		Map<String, String> dbParams = new HashMap<>((int)(5 / 0.75) + 1);
+		Map<String, String> dbParams = new HashMap<>((int)(6 / 0.75) + 1);
 		dbParams.put("userName", userName);
 		dbParams.put("password", password);
 		dbParams.put("dbms", dbms);

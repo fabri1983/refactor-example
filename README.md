@@ -16,13 +16,15 @@ and good practices for clean code.
 - Uses Maven 3.6.x for project setup and building. You can use `mvnw` if you don't have Maven installed in your host.
 
 - Class `org.fabri1983.refactorexample.joblogger.JobLogger` is the target class to be refactored.
-  - You can notice that the first line of method `JobLogger.logMessage()` will throw a NullPointerException if message object is null, 
-  which is a common problem compilers do not see and should show you a warning. (I think you can configure your IDE settings for such scenarios).
+  - You can notice that the first line of method `JobLogger.logMessage()` will throw a NullPointerException if message object is null. 
+  I think compilers should show you a warning. (I think you can configure your IDE settings for such scenarios).
   - The `JobLogger.logMessage()` method tries to connect to a database and also creates some I/O handlers no matter what's the output target.
   - It also has a very complex logic with conditional statements everywhere.
   - It defines a list of boolean parameters acting as flags letting you control the internal behavior of the method, which turns it into a white box.
   - Cohesiveness is very low since it tries to do many unrelated things: creation of I/O handlers and database must be threated at configuration/creation level.
-
+  - Is not thread-safe: given the nature of static variables as global state holders, concurrent access results in unpredictable behavior.
+  - Possible SQL Injection: the creation of a Statement using a query string build up from concatenation of several strings may lead to injection of unexpected queries.
+  
 - Classes on package `org.fabri1983.refactorexample.joblogger.enhanced` are the result after applying a refactor. Resulting core classes:
   - `ConsoleJobLogger`: logs to StdErr.
   - `FileJobLogger`: logs to a file.
@@ -30,10 +32,10 @@ and good practices for clean code.
   - `CompoundJobLogger`: allows creation of one logger compound by 2 or more loggers.
   - Many other classes and interfaces.
 
-- Good practices were took into consideration, and some fixes:
+- Good practices were took into consideration, and some fixes as well:
   - Modularization.
   - Meaningful variable and method names. Also keeping code conventions for class/variable/method names.
-  - Avoid static variables, since they are cumbersome when implementing unit tests and may produce irreproducible bugs on concurrent scenarios.
+  - Avoid static variables, since they are cumbersome for testing and may lead to irreproducible bugs on concurrent scenarios.
   - Use interfaces to define contracts and then implementing different behaviours.
   - Using enums to narrow variable values.
   - Encapsulate long list of parameters into a context or configuration object.
@@ -41,7 +43,8 @@ and good practices for clean code.
   - Delay object creation if you don't need them.
   - Static factory method and builder design patterns.
   - Dependency Injection (for example a Connection object).
-  - Close statements after use to release resources.
+  - Close statements after use to release resources. Use *try with resources* idiom.
+  - PreparedStatement allows to pre compile the target sql query to avoid SQL injection.
 
 - JUnit tests runs both versions of the program.
   - Using Maven Surefire plugin with default group `AllLoggersCategoryTest` runs all tests. See next section.

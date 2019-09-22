@@ -2,6 +2,7 @@ package org.fabri1983.refactorexample.joblogger.enhanced.exception;
 
 public enum JobLoggerExceptionMessage {
 
+	FILE_IS_NULL("File descriptor is null."),
 	FILE_HANDLER_NOT_BUILT("Couldn't create FileHandler."),
 	CONNECTION_IS_MISSING("Connection is missing."),
 	CONNECTION_IS_CLOSED("Connection is closed."),
