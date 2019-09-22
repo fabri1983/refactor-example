@@ -25,6 +25,9 @@ public class JobLoggerFactory {
 	}
 	
 	public static IEnhancedJobLogger newDatabaseJobLogger(Connection connection) {
+		if (connection == null) {
+			throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_MISSING);
+		}
 		return new DatabaseJobLogger(connection);
 	}
 	

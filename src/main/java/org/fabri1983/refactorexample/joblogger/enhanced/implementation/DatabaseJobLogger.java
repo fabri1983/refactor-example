@@ -20,9 +20,6 @@ public class DatabaseJobLogger extends JobLoggerSlf4jBridge implements IEnhanced
 	}
 
 	protected void validateConnection(Connection connection) {
-		if (connection == null) {
-			throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_MISSING);
-		}
 		try {
 			if (connection.isClosed()) {
 				throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_CLOSED);

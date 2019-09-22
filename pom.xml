@@ -89,27 +89,11 @@
 			<artifactId>powermock-api-easymock</artifactId>
 			<version>2.0.2</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.easymock</groupId>
-					<artifactId>easymock</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib-nodep</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
 			<version>4.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>3.3.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
