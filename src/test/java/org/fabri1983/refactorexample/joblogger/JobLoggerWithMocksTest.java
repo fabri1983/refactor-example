@@ -154,10 +154,10 @@ public class JobLoggerWithMocksTest {
 		mockStatic(DriverManager.class);
 		expect(DriverManager.getConnection(anyString(), anyObject()))
 				.andReturn(mockConnection);
-		 
+		
 		expect(mockConnection.createStatement())
 				.andReturn(mockStatement);
-	
+		
 		if (logToDatabase) {
 			expect(mockStatement.executeUpdate(anyString()))
 					.andReturn(0);
