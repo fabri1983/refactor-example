@@ -11,7 +11,7 @@ This project is a technical assesment in which the developer has to show its ref
 and good practices for clean code.
 
 
-- Supports Java 8 only by the moment. I'm having issues with the use of EasyMock and its CGLIB internal api when running on Java 9 and higher.
+- Supports JVM 8 only by the moment. I'm having issues with the use of EasyMock and its CGLIB internal api when running on JVM 9 and higher.
 
 - Uses Maven 3.6.x for project setup and building. You can use `mvnw` if you don't have Maven installed in your host.
 

@@ -29,7 +29,7 @@ public class FileJobLoggerTest {
 		File file = null;
 		
 		// when: creating a File Job Logger
-		JobLoggerFactory.newFileJobLogger(file);
+		JobLoggerFactory.forFile(file);
 		
 		// then: exception is expected
 	}
@@ -44,7 +44,7 @@ public class FileJobLoggerTest {
 		temporaryFolder.delete();
 		
 		// when: creating a File Job Logger
-		JobLoggerFactory.newFileJobLogger(tempFile);
+		JobLoggerFactory.forFile(tempFile);
 		
 		// then: exception is expected
 	}
@@ -56,7 +56,7 @@ public class FileJobLoggerTest {
 		File tempFile = temporaryFolder.newFile("logFile.txt");
 		
 		// given: a File Job Logger
-		IEnhancedJobLogger logger = JobLoggerFactory.newFileJobLogger(tempFile);
+		IEnhancedJobLogger logger = JobLoggerFactory.forFile(tempFile);
 		
 		// when: logging messages
 		String infoMessage = "info message";

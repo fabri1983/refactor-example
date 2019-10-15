@@ -1,18 +1,19 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
-import java.util.logging.ConsoleHandler;
+import java.io.OutputStream;
 
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
+import org.fabri1983.refactorexample.joblogger.enhanced.handler.CustomConsoleHandler;
 
 public class ConsoleJobLogger extends JobLoggerSlf4jBridge implements IEnhancedJobLogger {
 
-	public ConsoleJobLogger() {
+	public ConsoleJobLogger(final OutputStream out) {
 		super(ConsoleJobLogger.class.getSimpleName());
-		setHandler();
+		setHandlerFor(out);
 	}
 
-	private void setHandler() {
-		ConsoleHandler ch = new ConsoleHandler();
+	private void setHandlerFor(final OutputStream out) {
+		CustomConsoleHandler ch = new CustomConsoleHandler(out);
 		logger.addHandler(ch);
 	}
 

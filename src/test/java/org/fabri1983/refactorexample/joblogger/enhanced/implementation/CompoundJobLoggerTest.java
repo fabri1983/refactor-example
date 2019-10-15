@@ -28,7 +28,7 @@ public class CompoundJobLoggerTest {
 	public void whenCreatingCompoundJobLoggerWithNullArray_thenException() {
 		
 		// given: a Compound Job Logger with no null array
-		JobLoggerFactory.newCompoundJobLogger((IEnhancedJobLogger[])null);
+		JobLoggerFactory.compoundBy((IEnhancedJobLogger[])null);
 		
 		// then: exception is thrown
 	}
@@ -37,7 +37,7 @@ public class CompoundJobLoggerTest {
 	public void whenCreatingCompoundJobLoggerWithEmptyArray_thenException() {
 		
 		// given: a Compound Job Logger with empty array
-		JobLoggerFactory.newCompoundJobLogger(new IEnhancedJobLogger[]{});
+		JobLoggerFactory.compoundBy(new IEnhancedJobLogger[]{});
 		
 		// then: exception is thrown
 	}
@@ -49,13 +49,13 @@ public class CompoundJobLoggerTest {
 		File tempFile = temporaryFolder.newFile("logFile.txt");
 		
 		// given: a File Job Logger
-		IEnhancedJobLogger fileLogger = JobLoggerFactory.newFileJobLogger(tempFile);
+		IEnhancedJobLogger fileLogger = JobLoggerFactory.forFile(tempFile);
 		
 		// given: a Console Job Logger
-		IEnhancedJobLogger consoleLogger = JobLoggerFactory.newConsoleJobLogger();
+		IEnhancedJobLogger consoleLogger = JobLoggerFactory.forStdErr();
 		
 		// given: a logger compounded by two loggers 
-		IEnhancedJobLogger compoundLogger = JobLoggerFactory.newCompoundJobLogger(fileLogger, consoleLogger);
+		IEnhancedJobLogger compoundLogger = JobLoggerFactory.compoundBy(fileLogger, consoleLogger);
 		
 		// then: job loggers were created
 		Assert.assertNotNull(fileLogger);
@@ -74,13 +74,13 @@ public class CompoundJobLoggerTest {
 		StandardConsoleRedirector.setCustomConsole();
 		
 		// given: a File Job Logger
-		IEnhancedJobLogger fileLogger = JobLoggerFactory.newFileJobLogger(tempFile);
+		IEnhancedJobLogger fileLogger = JobLoggerFactory.forFile(tempFile);
 		
 		// given: a Console Job Logger
-		IEnhancedJobLogger consoleLogger = JobLoggerFactory.newConsoleJobLogger();
+		IEnhancedJobLogger consoleLogger = JobLoggerFactory.forStdErr();
 		
 		// given: a logger compounded by two loggers 
-		IEnhancedJobLogger logger = JobLoggerFactory.newCompoundJobLogger(fileLogger, consoleLogger);
+		IEnhancedJobLogger logger = JobLoggerFactory.compoundBy(fileLogger, consoleLogger);
 		
 		// when: logging messages on the compound logger
 		String infoMessage = "info message";

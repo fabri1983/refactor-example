@@ -13,14 +13,14 @@ import org.junit.experimental.categories.Category;
 public class ConsoleJobLoggerTest {
 
 	@Test
-	public void whenCreatingLogWithConsoleOuput_thenConsoleContainsMessage() throws Exception {
+	public void whenCreatingLogWithConsoleStdErr_thenStdErrContainsMessage() throws Exception {
 		
 		// given: a custom console
-		StandardConsoleRedirector.saveStdErr(); // JobLogger's ConsoleHandler prints out to StdErr
+		StandardConsoleRedirector.saveStdErr();
 		StandardConsoleRedirector.setCustomConsole();
 		
 		// given: a Console Job Logger
-		IEnhancedJobLogger logger = JobLoggerFactory.newConsoleJobLogger();
+		IEnhancedJobLogger logger = JobLoggerFactory.forStdErr();
 		
 		// when: logging messages to console
 		String infoMessage = "info message";
@@ -41,7 +41,39 @@ public class ConsoleJobLoggerTest {
 		boolean containsAll = loggedMessages.contains(infoMessage) 
 				&& loggedMessages.contains(warningMessage)
 				&& loggedMessages.contains(errorMessage);
-		Assert.assertTrue("Console logged messages are not the same than expected messages.", containsAll);
+		Assert.assertTrue("Console Std Err logged messages are not the same than expected.", containsAll);
+	}
+	
+	@Test
+	public void whenCreatingLogWithConsoleStdOut_thenStdOutContainsMessage() throws Exception {
+		
+		// given: a custom console
+		StandardConsoleRedirector.saveStdOut();
+		StandardConsoleRedirector.setCustomConsole();
+		
+		// given: a Console Job Logger
+		IEnhancedJobLogger logger = JobLoggerFactory.forStdOut();
+		
+		// when: logging messages to console
+		String infoMessage = "info message";
+		logger.info(infoMessage);
+		String warningMessage = "warning message";
+		logger.warn(warningMessage);
+		String errorMessage = "error message";
+		logger.error(errorMessage);
+		
+		// then: retrieve logged messages from custom console
+		String loggedMessages = StandardConsoleRedirector.getCurrentConsoleContent();
+		
+		// then: restore system console
+		StandardConsoleRedirector.restoreStd();
+		StandardConsoleRedirector.closeCustomConsole();
+		
+		// then: messages from custom console matches with expected messages
+		boolean containsAll = loggedMessages.contains(infoMessage) 
+				&& loggedMessages.contains(warningMessage)
+				&& loggedMessages.contains(errorMessage);
+		Assert.assertTrue("Console Std Out logged messages are not the same than expected.", containsAll);
 	}
 	
 }

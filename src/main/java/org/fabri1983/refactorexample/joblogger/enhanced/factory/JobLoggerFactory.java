@@ -13,25 +13,29 @@ import org.fabri1983.refactorexample.joblogger.enhanced.implementation.FileJobLo
 
 public class JobLoggerFactory {
 
-	public static IEnhancedJobLogger newConsoleJobLogger() {
-		return new ConsoleJobLogger();
+	public static IEnhancedJobLogger forStdErr() {
+		return new ConsoleJobLogger(System.err);
 	}
 	
-	public static IEnhancedJobLogger newFileJobLogger(File file) {
+	public static IEnhancedJobLogger forStdOut() {
+		return new ConsoleJobLogger(System.out);
+	}
+	
+	public static IEnhancedJobLogger forFile(File file) {
 		if (file == null) {
 			throw new JobLoggerException(JobLoggerExceptionMessage.FILE_IS_NULL);
 		}
 		return new FileJobLogger(file);
 	}
 	
-	public static IEnhancedJobLogger newDatabaseJobLogger(Connection connection) {
+	public static IEnhancedJobLogger forDatabase(Connection connection) {
 		if (connection == null) {
 			throw new JobLoggerException(JobLoggerExceptionMessage.CONNECTION_IS_MISSING);
 		}
 		return new DatabaseJobLogger(connection);
 	}
 	
-	public static IEnhancedJobLogger newCompoundJobLogger(IEnhancedJobLogger ... loggers) {
+	public static IEnhancedJobLogger compoundBy(IEnhancedJobLogger ... loggers) {
 		if (loggers == null || loggers.length == 0) {
 			throw new JobLoggerException(JobLoggerExceptionMessage.JOB_LOGGERS_MISSING);
 		}

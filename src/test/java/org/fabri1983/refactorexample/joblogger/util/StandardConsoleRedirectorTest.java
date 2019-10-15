@@ -10,7 +10,7 @@ import org.junit.experimental.categories.Category;
 public class StandardConsoleRedirectorTest {
 
 	@Test
-	public void whenRedirectStdOutToNewConsole_thenNewConsoleWritesMessage() throws Exception {
+	public void whenRedirectStdOutToNewConsole_thenNewConsoleWritesMessages() throws Exception {
 		
 		// given: a custom console
 		StandardConsoleRedirector.saveStdOut();
@@ -29,11 +29,11 @@ public class StandardConsoleRedirectorTest {
 		
 		// then: message from custom console matches with expected message
 		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected message.", contains);
+		Assert.assertTrue("Console logged message is not the same than expected.", contains);
 	}
 	
 	@Test
-	public void whenRedirectStdErroNewConsole_thenNewConsoleWritesMessage() throws Exception {
+	public void whenRedirectStdErroNewConsole_thenNewConsoleWritesMessages() throws Exception {
 		
 		// given: a custom console
 		StandardConsoleRedirector.saveStdErr();
@@ -52,7 +52,7 @@ public class StandardConsoleRedirectorTest {
 		
 		// then: message from custom console matches with expected message
 		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected message.", contains);
+		Assert.assertTrue("Console logged message is not the same than expected.", contains);
 	}
 	
 }

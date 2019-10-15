@@ -41,7 +41,7 @@ public class DatabaseJobLoggerTest {
 		Connection connection = null;
 		
 		// given: a Database Job Logger
-		JobLoggerFactory.newDatabaseJobLogger(connection);
+		JobLoggerFactory.forDatabase(connection);
 		
 		// then: exception is raised
 	}
@@ -56,7 +56,7 @@ public class DatabaseJobLoggerTest {
 		Connection connection = createConnection();
 		
 		// given: a Database Job Logger
-		JobLoggerFactory.newDatabaseJobLogger(connection);
+		JobLoggerFactory.forDatabase(connection);
 		
 		// then: verify components has been called as per expectations
 		PowerMock.verifyAll();
@@ -74,7 +74,7 @@ public class DatabaseJobLoggerTest {
 		Connection connection = createConnection();
 		
 		// given: a Database Job Logger
-		JobLoggerFactory.newDatabaseJobLogger(connection);
+		JobLoggerFactory.forDatabase(connection);
 		
 		// then: verify components has been called as per expectations
 		PowerMock.verifyAll();
@@ -92,7 +92,7 @@ public class DatabaseJobLoggerTest {
 		Connection connection = createConnection();
 		
 		// given: a Database Job Logger
-		IEnhancedJobLogger logger = JobLoggerFactory.newDatabaseJobLogger(connection);
+		IEnhancedJobLogger logger = JobLoggerFactory.forDatabase(connection);
 		
 		// when: login messages
 		String infoMessage = "info message";
@@ -116,7 +116,7 @@ public class DatabaseJobLoggerTest {
 		Connection connection = createConnection();
 		
 		// given: a Database Job Logger
-		IEnhancedJobLogger logger = JobLoggerFactory.newDatabaseJobLogger(connection);
+		IEnhancedJobLogger logger = JobLoggerFactory.forDatabase(connection);
 		
 		// when: login messages
 		String infoMessage = "info message";

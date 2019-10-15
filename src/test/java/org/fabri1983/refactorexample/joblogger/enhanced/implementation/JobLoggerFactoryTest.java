@@ -1,17 +1,16 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Properties;
-
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.expect;
 import static org.powermock.api.easymock.PowerMock.createMock;
 import static org.powermock.api.easymock.PowerMock.mockStatic;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
@@ -51,10 +50,10 @@ public class JobLoggerFactoryTest {
 		Connection connection = createConnection();
 		
 		// given: all possible job loggers
-		IEnhancedJobLogger fileLogger = JobLoggerFactory.newFileJobLogger(tempFile);
-		IEnhancedJobLogger consoleLogger = JobLoggerFactory.newConsoleJobLogger();
-		IEnhancedJobLogger dbLogger = JobLoggerFactory.newDatabaseJobLogger(connection);
-		IEnhancedJobLogger compoundLogger = JobLoggerFactory.newCompoundJobLogger(fileLogger, consoleLogger, dbLogger);
+		IEnhancedJobLogger fileLogger = JobLoggerFactory.forFile(tempFile);
+		IEnhancedJobLogger consoleLogger = JobLoggerFactory.forStdErr();
+		IEnhancedJobLogger dbLogger = JobLoggerFactory.forDatabase(connection);
+		IEnhancedJobLogger compoundLogger = JobLoggerFactory.compoundBy(fileLogger, consoleLogger, dbLogger);
 		
 		// then: job loggers are not null
 		Assert.assertNotNull(fileLogger);
