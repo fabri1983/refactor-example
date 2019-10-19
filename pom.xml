@@ -22,6 +22,7 @@
 		<junit.parameterized.version>1.1.0</junit.parameterized.version>
 		<easymock.version>4.0.2</easymock.version>
 		<powermock.version>2.0.2</powermock.version>
+		<dependency.check.maven.version>5.2.2</dependency.check.maven.version>
 	</properties>
 	
 	<profiles>
@@ -51,6 +52,39 @@
 			<properties>
 				<testcase.groups>org.fabri1983.refactorexample.joblogger.category.SupportingCategoryTest</testcase.groups>
 			</properties>
+		</profile>
+		<!-- OWASP security checker for project dependencies -->
+		<profile>
+			<id>securitycheck</id>
+			<dependencies>
+				<!-- OWASP dependency checker -->
+				<dependency>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>${dependency.check.maven.version}</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<version>${dependency.check.maven.version}</version>
+						<configuration>
+							<suppressionFiles>
+								<!--suppressionFile>suppressed.xml</suppressionFile-->
+							</suppressionFiles>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 

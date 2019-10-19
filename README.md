@@ -80,3 +80,11 @@ By default profile `allTests` is activated.
 ```sh
 mvn clean test
 ```
+
+
+## OWASP Dependency Checker
+Run next command to check if any dependency has a security risk according the Maven plugin *dependency-checker* from **OWASP**:  
+```sh
+mvn verify -P securitycheck
+```
+
