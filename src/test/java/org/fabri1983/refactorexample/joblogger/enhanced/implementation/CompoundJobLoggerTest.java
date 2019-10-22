@@ -1,10 +1,16 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fabri1983.refactorexample.joblogger.JobLogger;
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
@@ -12,7 +18,6 @@ import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerExcep
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
 import org.fabri1983.refactorexample.joblogger.util.StandardConsoleRedirector;
 import org.fabri1983.refactorexample.joblogger.util.XmlDomUtil;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -24,22 +29,28 @@ public class CompoundJobLoggerTest {
 	@Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingCompoundJobLoggerWithNullArray_thenException() {
 		
-		// given: a Compound Job Logger with no null array
-		JobLoggerFactory.compoundBy((IEnhancedJobLogger[])null);
-		
-		// then: exception is thrown
+		assertThrows(JobLoggerException.class, () -> {
+
+			// given: a Compound Job Logger with no null array
+			JobLoggerFactory.compoundBy((IEnhancedJobLogger[])null);
+			
+			// then: exception is thrown
+		});
 	}
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingCompoundJobLoggerWithEmptyArray_thenException() {
 		
-		// given: a Compound Job Logger with empty array
-		JobLoggerFactory.compoundBy(new IEnhancedJobLogger[]{});
-		
-		// then: exception is thrown
+		assertThrows(JobLoggerException.class, () -> {
+
+			// given: a Compound Job Logger with empty array
+			JobLoggerFactory.compoundBy(new IEnhancedJobLogger[]{});
+			
+			// then: exception is thrown
+		});
 	}
 	
 	@Test
@@ -58,9 +69,9 @@ public class CompoundJobLoggerTest {
 		IEnhancedJobLogger compoundLogger = JobLoggerFactory.compoundBy(fileLogger, consoleLogger);
 		
 		// then: job loggers were created
-		Assert.assertNotNull(fileLogger);
-		Assert.assertNotNull(consoleLogger);
-		Assert.assertNotNull(compoundLogger);
+		assertNotNull(fileLogger);
+		assertNotNull(consoleLogger);
+		assertNotNull(compoundLogger);
 	}
 	
 	@Test
@@ -101,11 +112,11 @@ public class CompoundJobLoggerTest {
 		boolean containsAll = consoleLoggedMessages.contains(infoMessage) 
 				&& consoleLoggedMessages.contains(warningMessage)
 				&& consoleLoggedMessages.contains(errorMessage);
-		Assert.assertTrue("Console logged messages are not the same than expected messages.", containsAll);
+		assertTrue("Console logged messages are not the same than expected messages.", containsAll);
 		
 		// then: logged messages exists in file
 		List<String> fileLoggedMessages = XmlDomUtil.getMessagesFromLogXmlFile(tempFile);
-		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), fileLoggedMessages);
+		assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), fileLoggedMessages);
 	}
 	
 }

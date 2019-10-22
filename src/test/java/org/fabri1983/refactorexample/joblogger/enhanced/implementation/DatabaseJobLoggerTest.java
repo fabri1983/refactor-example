@@ -1,18 +1,19 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Properties;
-
 import static org.easymock.EasyMock.anyInt;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
+import static org.junit.Assert.assertThrows;
 import static org.powermock.api.easymock.PowerMock.createMock;
 import static org.powermock.api.easymock.PowerMock.mockStatic;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
@@ -34,52 +35,61 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @Category({ EnhancedLoggerCategoryTest.class, AllLoggersCategoryTest.class })
 public class DatabaseJobLoggerTest {
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingLogWithDatabaseOuputWithNullConnection_thenException() throws Exception {
 		
-		// given: a null connection
-		Connection connection = null;
-		
-		// given: a Database Job Logger
-		JobLoggerFactory.forDatabase(connection);
-		
-		// then: exception is raised
+		assertThrows(JobLoggerException.class, () -> {
+
+			// given: a null connection
+			Connection connection = null;
+			
+			// given: a Database Job Logger
+			JobLoggerFactory.forDatabase(connection);
+			
+			// then: exception is raised
+		});
 	}
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingLogWithDatabaseOuputWithClosedConnection_thenException() throws Exception {
 		
-		// prepare mocks and expectations
-		mockComponentsForClosedConnection();
-		
-		// given: a null connection
-		Connection connection = createConnection();
-		
-		// given: a Database Job Logger
-		JobLoggerFactory.forDatabase(connection);
-		
-		// then: verify components has been called as per expectations
-		PowerMock.verifyAll();
-		
-		// then: exception is raised
+		assertThrows(JobLoggerException.class, () -> {
+
+			// prepare mocks and expectations
+			mockComponentsForClosedConnection();
+			
+			// given: a null connection
+			Connection connection = createConnection();
+			
+			// given: a Database Job Logger
+			JobLoggerFactory.forDatabase(connection);
+			
+			// then: verify components has been called as per expectations
+			PowerMock.verifyAll();
+			
+			// then: exception is raised
+		});
 	}
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingLogWithDatabaseOuputWithErrorConnection_thenException() throws Exception {
 		
-		// prepare mocks and expectations
-		mockComponentsForErrorConnection();
-		
-		// given: a null connection
-		Connection connection = createConnection();
-		
-		// given: a Database Job Logger
-		JobLoggerFactory.forDatabase(connection);
-		
-		// then: verify components has been called as per expectations
-		PowerMock.verifyAll();
-		
-		// then: exception is raised
+		assertThrows(JobLoggerException.class, () -> {
+
+			// prepare mocks and expectations
+			mockComponentsForErrorConnection();
+			
+			// given: a null connection
+			Connection connection = createConnection();
+			
+			// given: a Database Job Logger
+			JobLoggerFactory.forDatabase(connection);
+			
+			// then: verify components has been called as per expectations
+			PowerMock.verifyAll();
+			
+			// then: exception is raised
+		});
 	}
 	
 	@Test

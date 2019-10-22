@@ -1,5 +1,7 @@
 package org.fabri1983.refactorexample.joblogger.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.SupportingCategoryTest;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -49,7 +50,7 @@ public class XmlDomUtilTest {
 		String message = XmlDomUtil.getMessagesFromLogXmlFile(tempFile).get(0);
 		
 		// then: message is the expected
-		Assert.assertEquals(expectedMessage, message);
+		assertEquals(expectedMessage, message);
 	}
 	
 	@Test
@@ -78,7 +79,7 @@ public class XmlDomUtilTest {
 		String message = XmlDomUtil.getMessagesFromLogXmlFile(tempFile).get(0);
 		
 		// then: message is the expected
-		Assert.assertEquals(expectedMessage, message);
+		assertEquals(expectedMessage, message);
 	}
 	
 }

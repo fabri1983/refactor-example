@@ -1,16 +1,19 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fabri1983.refactorexample.joblogger.JobLogger;
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.exception.JobLoggerException;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
 import org.fabri1983.refactorexample.joblogger.util.XmlDomUtil;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -22,31 +25,37 @@ public class FileJobLoggerTest {
 	@Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingLogWithNullFile_thenException() throws Exception {
 		
-		// given: a null file reference
-		File file = null;
-		
-		// when: creating a File Job Logger
-		JobLoggerFactory.forFile(file);
-		
-		// then: exception is expected
+		assertThrows(JobLoggerException.class, () -> {
+
+			// given: a null file reference
+			File file = null;
+			
+			// when: creating a File Job Logger
+			JobLoggerFactory.forFile(file);
+			
+			// then: exception is expected
+		});
 	}
 	
-	@Test(expected = JobLoggerException.class)
+	@Test
 	public void whenCreatingLogWithMissingFile_thenException() throws Exception {
 		
-		// given: a log file in temporary folder
-		File tempFile = temporaryFolder.newFile("logFile.txt");
-		
-		// given: deleting the file
-		temporaryFolder.delete();
-		
-		// when: creating a File Job Logger
-		JobLoggerFactory.forFile(tempFile);
-		
-		// then: exception is expected
+		assertThrows(JobLoggerException.class, () -> {
+
+			// given: a log file in temporary folder
+			File tempFile = temporaryFolder.newFile("logFile.txt");
+			
+			// given: deleting the file
+			temporaryFolder.delete();
+			
+			// when: creating a File Job Logger
+			JobLoggerFactory.forFile(tempFile);
+			
+			// then: exception is expected
+		});
 	}
 	
 	@Test
@@ -68,7 +77,7 @@ public class FileJobLoggerTest {
 		
 		// then: logged messages exists in file
 		List<String> loggedMessages = XmlDomUtil.getMessagesFromLogXmlFile(tempFile);
-		Assert.assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), loggedMessages);
+		assertEquals(Arrays.asList(infoMessage, warningMessage, errorMessage), loggedMessages);
 	}
 	
 }

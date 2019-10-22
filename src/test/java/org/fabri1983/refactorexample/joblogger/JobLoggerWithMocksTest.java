@@ -1,5 +1,13 @@
 package org.fabri1983.refactorexample.joblogger;
 
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.anyString;
+import static org.easymock.EasyMock.expect;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.easymock.PowerMock.createMock;
+import static org.powermock.api.easymock.PowerMock.mockStatic;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,17 +15,10 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.anyString;
-import static org.easymock.EasyMock.expect;
-import static org.powermock.api.easymock.PowerMock.createMock;
-import static org.powermock.api.easymock.PowerMock.mockStatic;
-
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.OldLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.util.StandardConsoleRedirector;
 import org.fabri1983.refactorexample.joblogger.util.XmlDomUtil;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -63,9 +64,9 @@ public class JobLoggerWithMocksTest {
 		// verify components has been called as per expectations
 		PowerMock.verifyAll();
 		
-		Assert.assertTrue(tempFile.exists());
+		assertTrue(tempFile.exists());
 		String loggedMessage = XmlDomUtil.getMessagesFromLogXmlFile(tempFile).get(0);
-		Assert.assertEquals(messageToLog, loggedMessage);
+		assertEquals(messageToLog, loggedMessage);
 	}
 
 	@Test
@@ -99,7 +100,7 @@ public class JobLoggerWithMocksTest {
 		StandardConsoleRedirector.closeCustomConsole();
 		
 		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected message.", contains);
+		assertTrue("Console logged message is not the same than expected message.", contains);
 	}
 
 	@Test

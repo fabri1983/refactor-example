@@ -1,5 +1,8 @@
 package org.fabri1983.refactorexample.joblogger;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,7 +10,6 @@ import java.util.Map;
 
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.OldLoggerCategoryTest;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -30,11 +32,11 @@ public class JobLoggerTest {
 		// set static variables
 		new JobLogger(false, false, false, false, false, false, Collections.emptyMap());
 		
-		Exception e = Assert.assertThrows(Exception.class, () -> {
+		Exception e = assertThrows(Exception.class, () -> {
 			JobLogger.LogMessage("msg", false, false, false);
 		});
 		
-		Assert.assertEquals("Invalid configuration", e.getMessage());
+		assertEquals("Invalid configuration", e.getMessage());
 	}
 	
 	@Test
@@ -46,17 +48,17 @@ public class JobLoggerTest {
 		// set static variables
 		new JobLogger(false, logToConsoleParam, false, false, false, false, Collections.emptyMap());
 		
-		Exception e = Assert.assertThrows(Exception.class, () -> {
+		Exception e = assertThrows(Exception.class, () -> {
 			JobLogger.LogMessage("msg", false, false, false);
 		});
 		
-		Assert.assertEquals("Error or Warning or Message must be specified", e.getMessage());
+		assertEquals("Error or Warning or Message must be specified", e.getMessage());
 	}
 	
 	@Test
 	public void whenCreatingLogAndSendNullMessage_thenException() {
 		
-		Assert.assertThrows(NullPointerException.class, () -> {
+		assertThrows(NullPointerException.class, () -> {
 			JobLogger.LogMessage(null, false, false, false);
 		});
 	}
@@ -78,7 +80,7 @@ public class JobLoggerTest {
 		// set static variables
 		new JobLogger(false, false, logToDatabaseParam, logMessageParam, false, false, null);
 		
-		Assert.assertThrows(NullPointerException.class, () -> {
+		assertThrows(NullPointerException.class, () -> {
 			JobLogger.LogMessage("msg", logMessageParam, false, false);
 		});
 	}
@@ -101,7 +103,7 @@ public class JobLoggerTest {
 		new JobLogger(false, false, logToDatabaseParam, logMessageParam, false, false, dbParams);
 		
 		
-		Assert.assertThrows(NullPointerException.class, () -> {
+		assertThrows(NullPointerException.class, () -> {
 			JobLogger.LogMessage("msg", logMessageParam, false, false);
 		});
 	}
@@ -127,7 +129,7 @@ public class JobLoggerTest {
 		new JobLogger(false, false, logToDatabaseParam, logMessageParam, false, false, dbParams);
 		
 		
-		Assert.assertThrows(SQLException.class, () -> {
+		assertThrows(SQLException.class, () -> {
 			JobLogger.LogMessage("msg", logMessageParam, false, false);
 		});
 	}

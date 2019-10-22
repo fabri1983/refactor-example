@@ -3,6 +3,7 @@ package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.anyString;
 import static org.easymock.EasyMock.expect;
+import static org.junit.Assert.assertNotNull;
 import static org.powermock.api.easymock.PowerMock.createMock;
 import static org.powermock.api.easymock.PowerMock.mockStatic;
 
@@ -16,7 +17,6 @@ import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -56,10 +56,10 @@ public class JobLoggerFactoryTest {
 		IEnhancedJobLogger compoundLogger = JobLoggerFactory.compoundBy(fileLogger, consoleLogger, dbLogger);
 		
 		// then: job loggers are not null
-		Assert.assertNotNull(fileLogger);
-		Assert.assertNotNull(consoleLogger);
-		Assert.assertNotNull(dbLogger);
-		Assert.assertNotNull(compoundLogger);
+		assertNotNull(fileLogger);
+		assertNotNull(consoleLogger);
+		assertNotNull(dbLogger);
+		assertNotNull(compoundLogger);
 		
 		// then: verify components has been called as per expectations
 		PowerMock.verifyAll();

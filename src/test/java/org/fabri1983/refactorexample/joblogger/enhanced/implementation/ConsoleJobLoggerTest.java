@@ -1,11 +1,12 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
+import static org.junit.Assert.assertTrue;
+
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;
 import org.fabri1983.refactorexample.joblogger.enhanced.factory.JobLoggerFactory;
 import org.fabri1983.refactorexample.joblogger.util.StandardConsoleRedirector;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -41,7 +42,7 @@ public class ConsoleJobLoggerTest {
 		boolean containsAll = loggedMessages.contains(infoMessage) 
 				&& loggedMessages.contains(warningMessage)
 				&& loggedMessages.contains(errorMessage);
-		Assert.assertTrue("Console Std Err logged messages are not the same than expected.", containsAll);
+		assertTrue("Console Std Err logged messages are not the same than expected.", containsAll);
 	}
 	
 	@Test
@@ -73,7 +74,7 @@ public class ConsoleJobLoggerTest {
 		boolean containsAll = loggedMessages.contains(infoMessage) 
 				&& loggedMessages.contains(warningMessage)
 				&& loggedMessages.contains(errorMessage);
-		Assert.assertTrue("Console Std Out logged messages are not the same than expected.", containsAll);
+		assertTrue("Console Std Out logged messages are not the same than expected.", containsAll);
 	}
 	
 }

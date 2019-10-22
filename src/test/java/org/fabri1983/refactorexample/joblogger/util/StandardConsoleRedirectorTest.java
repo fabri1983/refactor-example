@@ -1,8 +1,9 @@
 package org.fabri1983.refactorexample.joblogger.util;
 
+import static org.junit.Assert.assertTrue;
+
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.SupportingCategoryTest;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -29,7 +30,7 @@ public class StandardConsoleRedirectorTest {
 		
 		// then: message from custom console matches with expected message
 		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected.", contains);
+		assertTrue("Console logged message is not the same than expected.", contains);
 	}
 	
 	@Test
@@ -52,7 +53,7 @@ public class StandardConsoleRedirectorTest {
 		
 		// then: message from custom console matches with expected message
 		boolean contains = loggedMessage.contains(messageToLog);
-		Assert.assertTrue("Console logged message is not the same than expected.", contains);
+		assertTrue("Console logged message is not the same than expected.", contains);
 	}
 	
 }
