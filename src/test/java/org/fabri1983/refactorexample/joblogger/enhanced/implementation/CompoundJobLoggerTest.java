@@ -1,16 +1,15 @@
 package org.fabri1983.refactorexample.joblogger.enhanced.implementation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.fabri1983.refactorexample.joblogger.JobLogger;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 import org.fabri1983.refactorexample.joblogger.category.AllLoggersCategoryTest;
 import org.fabri1983.refactorexample.joblogger.category.EnhancedLoggerCategoryTest;
 import org.fabri1983.refactorexample.joblogger.enhanced.contract.IEnhancedJobLogger;

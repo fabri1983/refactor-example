@@ -31,12 +31,11 @@ public class JobLogger {
 	private static boolean logWarning;
 	private static boolean logError;
 	private static boolean logToDatabase;
-	private boolean initialized;
-	private static Map dbParams;
+	private static Map<String, String> dbParams;
 	private static Logger logger;
 
 	public JobLogger(boolean logToFileParam, boolean logToConsoleParam, boolean logToDatabaseParam,
-			boolean logMessageParam, boolean logWarningParam, boolean logErrorParam, Map dbParamsMap) {
+			boolean logMessageParam, boolean logWarningParam, boolean logErrorParam, Map<String, String> dbParamsMap) {
 		logger = Logger.getLogger("MyLog");
 		logError = logErrorParam;
 		logMessage = logMessageParam;
