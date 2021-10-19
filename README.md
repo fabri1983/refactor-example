@@ -1,6 +1,6 @@
 # Refactoring a Java program: JobLogger
 
-[![Build Status](https://travis-ci.org/fabri1983/refactor-example.svg?branch=master)](https://travis-ci.org/fabri1983/refactor-example?branch=master)
+[![Build Status](https://app.travis-ci.com/fabri1983/refactor-example.svg?branch=master)](https://app.travis-ci.com/fabri1983/refactor-example?branch=master)
 &nbsp;&nbsp;&nbsp;&nbsp;
 [![Coverage Status](https://coveralls.io/repos/github/fabri1983/refactor-example/badge.svg)](https://coveralls.io/github/fabri1983/refactor-example?branch=master)
 &nbsp;&nbsp;&nbsp;&nbsp;
